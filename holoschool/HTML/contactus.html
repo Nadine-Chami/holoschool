@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>contact us</title>
+    <link rel="stylesheet" href="../holoschool.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <script src="../JavaScript/holoschool.js" defer></script>
+    
+</head>
+<body>
+    <nav>
+        <a id="header" class="font link color" href="holoschoolhp.html">HoloSchool</a>
+        <div> 
+            <a class="font link color nav-link" href="lesson.html">Lesson</a>
+            <a class="font link color nav-link" href="contactus.html">Help</a>
+            <div>
+                <img id="translator" src="../Pictures/translatorlogo.jpeg">
+                <ul id="lang-list">
+                    <li class="color">English</li>
+                    <li class="color">French</li>
+                </ul>
+            </div>
+            <!-- <img id="logo" src="../Pictures/holoschoollogo.black.jpeg"> -->
+        </div>
+    </nav> 
+
+    <h1 class=font style="color: #9ACFFF;">Feedback </h1>
+    <form onsubmit="event.preventDefault(); return request()"; id="feedback">
+        <label class=font for="name" style="color:#9ACFFF; ;"> Name:</label><br>
+        <input  style="background-color: black; color: #9ACFFF;" type="text" id="name" name="name"></br>
+        <span class="empty"></span>
+        </br>
+        <label class="font" for="name" style="color: #9ACFFF;">How we can help you?</label> </br>
+        <input style="background-color: black; color: #9ACFFF;"type="text" id="question" question="question"> </br>
+        <span class="empty"></span>
+        </br>
+        <p class="font" style="color: #9ACFFF;">How do you rate your experience?</p>
+        <div class="card">
+            <span onclick="gfg(0)" class="star">
+                ★
+            </span>
+            <span onclick="gfg(1)" class="star">
+                ★
+            </span>
+            <span onclick="gfg(2)" class="star">
+                ★
+            </span>
+            <span onclick="gfg(3)" class="star">
+                ★
+            </span>
+            <span onclick="gfg(4)" class="star">
+                ★
+            </span>
+            <input type="hidden" name="rate" id="rate"/>
+            <span class="empty"></span>
+    </div>
+    <div>
+        <input  style=" background-color: black; color: #9ACFFF; "type="submit" value="Submit">
+        <input style=" background-color: black; color: #9ACFFF; "type="reset" value="Reset">
+            </div>
+    </form>
+    <main>
+        <h2 class="font color" style="margin-left: 15px;">Email</h2>
+        <a class="link"  style="color: blue; margin-left: 15px;" href="mailto:holoschool.lessons@gmail.com">holoschool.lessons@gmail.com</a>
+        <h2 class="font color" style="margin-left: 15px;">Instagram</h2>
+        <a  class="link" style="color:blue;margin-left: 15px;" href="https://www.instagram.com/holoschool_?igsh=MWlwMHgyMmMxaDBkcA==">@holoschool_lb</a>
+    </main>
+    
+</body>
+</html>
+  </body>
+</html>

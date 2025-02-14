@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="../CSS/nav.css"/>
+        <link rel="stylesheet" href="../CSS/global.css"/>
+        <link rel="stylesheet" href="../CSS/footer.css"/>
+        <link rel="stylesheet" href="../CSS/holoschoolhp.css"/>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>holoschool</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    </head>
+<body onload="load()">
+    
+    <div class="video-container">
+        <video class="video" id="myVideo" loop autoplay >
+            <source src="../Videos/trianglewithbubbles1920_1080_30fps.mp4"/>
+        </video>
+    </div> 
+    <nav>
+        <a id="header" class="font link color" href="holoschoolhp.html">HoloSchool</a>
+        <div> 
+            <a class="font link color nav-link" href="lesson.html">Lesson</a>
+            <a class="font link color nav-link" href="contactus.html">Help</a>
+            <div>
+                <img id="translator" src="../Pictures/translatorlogo.jpeg">
+                <ul id="lang-list">
+                    <li class="color">English</li>
+                    <li class="color">French</li>
+                </ul>
+            </div>
+            
+        </div>
+    </nav>
+   <main>
+        <div style="display: flex; justify-content: center;">
+        <div>
+            <img src="../Pictures/arrowl.png" onclick="changeLeft()" style="width: 51.2px; height: 51.2px; margin-left: 150px; margin-right: 10px; margin-top: 50px; cursor: pointer;">
+        </div>
+        <div class="card" id="sir" style="margin:auto;border:1px solid #9ACFFF; border-radius:15px;width:60%; background-color: rgba(0,0,0,0.8);">
+            <h3 id="title" class="font color" style="margin:auto;width:40%;">What is Holoschool?</h3> 
+            <p id="para" class="font color">Holoschool is a free lebanese platform that makes learning easier ,this page provides math lessons especially 'the orthogonality in space' lesson in a interactive way using 3d shapes that can be seen from all angles</p>  
+        </div>
+        <div>
+            <img src="../Pictures/arrowl.png" onclick="changeRight()" style="width: 51.2px; height: 51.2px; margin-left: 10px; margin-right:50px; cursor: pointer; margin-top: 50px; transform:scaleX(-1)" >
+        </div>
+        </div>
+   </main>
+   <footer>
+    <div>
+      <div >  <a  id="contactus" class="link color font" style="margin-left:10%" href="contactus.html">Contact us</a> </div>
+    
+          
+    <div style="display: flex;">
+        <img style="margin-left: auto;" id="insta-l" src="../Pictures/instagram-logo-white-plain-3.png">
+        <a href="mailto:holoschool.lessons@gmail.com"><img id="email-l"src="./Pictures/Gmail-logo(1).png"></a>
+    </div>
+    </div>
+    </footer>
+    <script src="../JavaScript/holoschool.js"></script>
+</body>
+</html>
+ 
