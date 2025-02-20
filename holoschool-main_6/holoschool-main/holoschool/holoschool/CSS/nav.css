@@ -1,0 +1,61 @@
+nav{
+    opacity: 0.8;
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom:#9ACFFF 1px solid;
+}
+nav > div {
+    display: flex;
+    margin-left:auto;
+    align-items: center;
+}
+nav > *{
+    margin:25px;
+    font-size: larger;
+}
+.nav-link{
+    margin-left: 40px; 
+}
+#translator{
+    width: 72px;
+    height: 55.066px ;
+}
+#translator:hover ~ #lang-list, #lang-list:hover{
+    height:20%;
+ }
+ #lang-list{
+     position: absolute;
+     right:20px;
+     top:60px;
+     height:0;
+     overflow:hidden;
+     transition: height 0.5s;
+     list-style-type: none;
+     z-index: 3;
+ }
+ #lang-list > li{
+     border:#9ACFFF 1px solid;
+     padding:10px;
+     cursor:pointer;
+     background-color: black;
+ }
+ #logo{
+     width: 72px;
+     height: 73px;
+     margin-left: 10%;
+}
+#holoskl{
+    color: #0c67bc;
+    font-size: larger;
+    margin-right: 10px;
+
+}
+#header{
+    font-weight: bolder;
+}
+a:hover{
+    background-color: #9ACFFF;
+    color: black;
+}
