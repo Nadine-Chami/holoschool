@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="../CSS/nav.css" />
+    <link rel="stylesheet" href="../CSS/global.css" />
+    <link rel="stylesheet" href="../CSS/footer.css" />
+    <link rel="stylesheet" href="../CSS/holoschool.css" />
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>holoschool</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+</head>
+
+<body onload="load()">
+    <!-- <video class="video" id="myVideo" loop autoplay>
+            <source src="../Pictures/oceanwave_1920_1080_30fps.mp4" />
+        </video> -->
+    <div class="video-container">
+        <video class="video" id="myVideo" loop autoplay controls>
+            <source src="../Pictures/12379622_1920_1080_30fps.mp4"
+                type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+    </div>
+
+    <nav>
+        <img style="width: 74.8px; height:66.9px ; " src="../Pictures/holoskllllllllll.png">
+        <a id="header" class="font link color" href="holoschoolhp.html">HoloSchool</a>
+        <div>
+            <a class="font link color nav-link lesfr" href="lesson.html">Lessons</a>
+            <a class="font link color nav-link exfr" href="lesson.html" >Excercises</a>
+            <a class="font link color nav-link tufr" href="tutors.html">Tutors</a>
+            <a class="font link color nav-link contactfr" href="contactus.html" >Contact Us</a>
+
+
+
+            <div>
+                <i id="translator" class="font link color nav-link fa-solid fa-language"></i>
+                <ul id="lang-list">
+                    <li class="color" id="en">English</li>
+                    <li class="color" id="fr">French</li>
+                </ul>
+            </div>
+            <i class="font link color nav-link fa-solid fa-user"></i>
+
+        </div>
+    </nav>
+    <main class="background">
+        <div style="
+            display: flex;
+            justify-content: center;
+            padding: 0 100px;
+            padding-top: 60px;">
+            <div>
+                <img src="../Pictures/arrowl.png" onclick="changeLeft()"
+                    style="width: 51.2px; height: 51.2px;  margin-top: 82px; cursor: pointer;">
+            </div>
+            <div class="card">
+                <h3 id="title" class="font color1" style="font-size: 26px; font-weight: 700; ">What is Holoschool?</h3>
+                <p id="para1" class="font color1" style="font-size: 18px;">Holoschool is a free lebanese platform that
+                    makes learning easier ,this
+                    page provides math lessons especially 'the orthogonality in space' lesson in a interactive way using
+                    3d shapes that can be seen from all angles</p>
+            </div>
+            <div>
+                <img src="../Pictures/arrowl.png" onclick="changeRight()"
+                    style="width: 51.2px; height: 51.2px; cursor: pointer; margin-top: 82px; transform:scaleX(-1)">
+            </div>
+        </div>
+        <div style="
+            width: 100%;
+            /* padding-top: 36px; */
+            padding-left:  470px;
+            margin-top: 36px;
+        ">
+            <button onclick="tolessons()" class="btn" id="getfr">Get started</button>
+        </div>
+    </main>
+
+   
+
+
+
+    <div class="tutors-section font">
+        <h1 class="tutors-title lesfr" >Lessons</h1>
+        <div class="tutors-container">
+            <div onclick=" gotoortho()" class="tutor-card">
+                <img src="../Pictures/3d-colorful-shapes-millions-of-cubes-1920x1200.jpg" alt="Tutor Image" class="lessons-img">
+                <h3 onclick=" gotoortho()" class="tutor-name ">Orthogonality in space</h3>
+                <p class="tutor-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
+            </div>
+            <div class="tutor-card">
+                <img src="../Pictures/fonctionimage..jpg" alt="Tutor Image" class="lessons-img">
+                <h3 class="tutor-name" class="funfr">Function</h3>
+                <p class="tutor-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
+            </div>
+            <div class="tutor-card">
+                <img src="../Pictures/vectorspace.jpeg" alt="Tutor Image" class="lessons-img">
+                <h3 class="tutor-name" class="vecfr">Vector space</h3>
+                <p class="tutor-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
+            </div>
+            <div style="
+            width: 100%;
+            
+            display: flex;
+            justify-content: end;
+            margin-top: 10px;
+        ">
+                <button onclick="tolessons()" class="btn">see more</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    </div>
+    <div class="tutors-section font">
+        <h1 class="tutors-title exfr">Exercises</h1>
+        <div class="tutors-container">
+            <div onclick="gotoortho()" class="tutor-card">
+                <!-- <img src="../Pictures/placeholder-person.png" alt="Tutor Image" class="tutor-img"> -->
+                <h3 class="tutor-name">ex in orthogonality in space</h3>
+                <p class="tutor-desc">ex1: ABCDEFGH is a cube , (ab)//(cd)...</p>
+            </div>
+            <div class="tutor-card">
+                <!-- <img src="../Pictures/placeholder-person.png" alt="Tutor Image" class="tutor-img"> -->
+                <h3 class="tutor-name">ex in function</h3>
+                <p class="tutor-desc">ex1: f(x)=2x^2-5 ...</p>
+            </div>
+            <div class="tutor-card">
+                <!-- <img src="../Pictures/placeholder-person.png" alt="Tutor Image" class="tutor-img"> -->
+                <h3 class="tutor-name">ex in vector in space</h3>
+                <p class="tutor-desc">ex1: determine the collinear vectors...</p>
+            </div>
+            <div style="
+        width: 100%;
+        
+        display: flex;
+        justify-content: end;
+        margin-top: 10px;
+    ">
+                <button onclick="tolessons()" class="btn">see more</button>
+            </div>
+        </div>
+    </div>
+    <div class="tutors-section font">
+        <h1 class="tutors-title tufr">Tutors</h1>
+        <div class="tutors-container">
+            <div class="tutor-card">
+                <img src="../Pictures/placeholder-person.png" alt="Tutor Image" class="tutor-img">
+                <h3 class="tutor-name">Bassem Zakaria</h3>
+                <p class="tutor-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
+            </div>
+            <div class="tutor-card">
+                <img src="../Pictures/placeholder-person.png" alt="Tutor Image" class="tutor-img">
+                <h3 class="tutor-name">Mohamad Dib</h3>
+                <p class="tutor-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
+            </div>
+            <div class="tutor-card">
+                <img src="../Pictures/placeholder-person.png" alt="Tutor Image" class="tutor-img">
+                <h3 class="tutor-name">Fadi al qass</h3>
+                <p class="tutor-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
+            </div>
+            <div style="
+            width: 100%;
+            
+            display: flex;
+            justify-content: end;
+            margin-top: 10px;
+        ">
+                <button onclick="totutors()" class="btn">see more</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <footer>
+        <div>
+            <div> <a id="contactus" class="link color font" style="margin-left:10%" href="contactus.html">Contact us</a>
+            </div>
+
+
+            <div style="display: flex;">
+                <i class="fa-brands fa-instagram" style="color: #9acfff; width: 10px;"></i>
+                <a style="color: #9acfff; width: 10px;" href="mailto:holoschool.lessons@gmail.com"><i class="fa-regular fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+    <script src="../JavaScript/holoschool.js"></script>
+    <script src="https://kit.fontawesome.com/1a0a15cd29.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
