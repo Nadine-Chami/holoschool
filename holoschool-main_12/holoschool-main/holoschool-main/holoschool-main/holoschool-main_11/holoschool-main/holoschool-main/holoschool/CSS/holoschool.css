@@ -405,3 +405,103 @@ border: 1px solid #ccc;
 #ex2{
   display: none;
 }
+
+/* Footer Styling */
+footer {
+  background-color: black;
+  color: white;
+  padding: 30px 10%;
+  text-align: center;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Logo & Description */
+.footer-logo h2 {
+  color: #9ACFFF;
+  font-size: 24px;
+}
+
+.footer-logo p {
+  font-size: 14px;
+  color: #9ACFFF;
+}
+
+/* Navigation Links */
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  display: inline-block;
+  margin: 0 20px;
+  position: relative; /* For dropdown positioning */
+}
+
+.footer-links a {
+  color: #9ACFFF;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Sub List Styles for Lessons, Exercises, Tutors */
+.sub-list {
+  list-style: none;
+  padding: 10px 0;
+  margin: 10px 0;
+  /* background-color: #333; Dark background for sub lists */
+  position: absolute;
+  left: 0;
+  top: 100%;
+  /* display: none; */
+  width: 200px;
+  border-radius: 5px;
+}
+
+.footer-links li:hover .sub-list {
+  display: block;
+}
+
+.lesson-item, .exercise-item, .tutor-item {
+  color: #f1f1f1;
+  font-size: 14px;
+  padding: 5px 10px;
+}
+
+/* Social Media */
+.footer-social p {
+  color: #9ACFFF;
+  font-size: 14px;
+}
+
+.footer-social a {
+  color: #9ACFFF;
+  margin: 0 10px;
+  font-size: 18px;
+}
+
+/* Separator */
+hr {
+  border: none;
+  height: 1px;
+  background-color: #7765c7;
+  margin: 20px 0;
+}
+
+/* Copyright Text */
+.footer-copy {
+  font-size: 12px;
+  color: #9ACFFF;
+}
+.icon:hover{
+  transform: scale(1.3);
+  color: #7e03aa;
+  cursor: pointer;
+}
