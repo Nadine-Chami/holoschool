@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>3D Holographic Sphere</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+        #sphere-container {
+            width: 100%;
+            height: 100vh;
+        }
+        .properties{
+            display: flex;
+            flex-direction: column;
+            position:absolute;
+            border: 1px solid;
+            margin: 10px;
+            border-radius: 15px;
+        }
+        .properties > *{
+            margin: 5px;
+        }
+        .font{
+            font-family: "Space Grotesk";
+        }
+        .toggle{
+            border: 1px solid;
+            border-radius: 25px;
+            width:20px;
+            height:10px;
+            padding:5px;
+            cursor:pointer;
+            display:inline-block;
+        }
+        .grey{
+            background-color: grey;
+        }
+        .green{
+            background-color: green;
+        }
+        .white{
+            background-color: white;
+        }
+        .circle{
+            width:44%;
+            height:88%;
+            border:1px solid;
+            border-radius:50%;
+            box-shadow: 0px 0px 5px black;
+        }
+        .hidden{
+            position: absolute;
+            visibility: hidden;
+        }
+        .active{
+            margin-left:auto;
+        }
+        #toggle{
+            cursor: pointer;
+        }
+        #properties{
+            display: none;
+        }
+
+    </style>
+</head>
+<body id="background">
+    <div class="properties font">
+        <h2>Properties</h2>
+        <div>
+            <label for="colorPicker">sphere color</label>
+            <input type="color" id="colorPicker" value="#000000" onchange="changeColorSphere()">
+        </div>
+        <div>
+            <label for="gridPicker">grid color</label>
+            <input type="color" id="gridPicker" value="#000000" onchange="changeColorGrid()"/>
+        </div>
+        <div>
+            <label for="letterColor">letter color</label>
+            <input type="color" id="letterColor" value="#000000" onchange="changeColorLetter()"/>
+        </div>
+        <div> 
+            <label for="gridToggle">show grid</label>
+            <input type="checkbox" id="gridToggle" checked onchange="toggleGrid()"/>
+        </div>
+        <div>
+            <label>Dark mode: </label>
+            <input type="checkbox" onchange="changecolor()" id="darkmode">
+        </div>
+        <span id="toggle" onclick="showprops()">Show shape properties</span>
+        <div id="properties">
+            <p>prop1</p>
+            <p>prop2</p>
+            <p>prop3</p>
+        </div>  
+    </div>
+    <div id="sphere-container"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        function changeColorSphere() {
+            material.color.set(colorPicker.value);
+        }
+        function changeColorGrid() {
+            gridMaterial.color.set(gridPicker.value);
+        }
+        function changeColorLetter(){
+            let pointLabels = document.getElementsByClassName('point-label');
+            for(let i=0; i<pointLabels.length; i++){
+                pointLabels[i].style.color = letterColor.value;
+            }
+        }
+        function toggleGrid() {
+            grid.visible = gridToggle.checked;
+        }
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        const container = document.getElementById('sphere-container');
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+
+        const minDimension = Math.min(container.clientWidth, container.clientHeight);
+        const sphereRadius = minDimension * 0.004;
+
+        // Create sphere
+        const geometry = new THREE.SphereGeometry(sphereRadius, 32, 32);
+        const material = new THREE.MeshPhongMaterial({
+            color: 0x9acffff,
+            transparent: true,
+            opacity: 0.3,
+            specular: 0x555555,
+            shininess: 30,
+            side: THREE.DoubleSide
+        });
+        const sphere = new THREE.Mesh(geometry, material);
+
+        // Create disc in the middle
+        const discGeometry = new THREE.CircleGeometry(sphereRadius, 32);
+        const discMaterial = new THREE.MeshPhongMaterial({
+            color: 0x9acffff,
+            transparent: true,
+            opacity: 0.3,
+            side: THREE.DoubleSide
+        });
+        const disc = new THREE.Mesh(discGeometry, discMaterial);
+        sphere.add(disc);
+
+        // Create red disc for XY plane
+        const redDiscGeometry = new THREE.CircleGeometry(sphereRadius, 32);
+        const redDiscMaterial = new THREE.MeshPhongMaterial({
+            color: 0xff0000,
+            transparent: true,
+            opacity: 0.3,
+            side: THREE.DoubleSide
+        });
+        const redDisc = new THREE.Mesh(redDiscGeometry, redDiscMaterial);
+        redDisc.rotation.x = Math.PI / 2; // Rotate to lie in XY plane
+        sphere.add(redDisc);
+
+        // Create grid
+        const gridGeometry = new THREE.EdgesGeometry(new THREE.SphereGeometry(sphereRadius, 16, 16));
+        const gridMaterial = new THREE.LineBasicMaterial({
+            color: 0x7fceff,
+            linewidth: 1
+        });
+        const grid = new THREE.LineSegments(gridGeometry, gridMaterial);
+        sphere.add(grid);
+
+        // Add diameter line
+        const diameterGeometry = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(-sphereRadius, 0, 0),
+            new THREE.Vector3(sphereRadius, 0, 0)
+        ]);
+        const diameterMaterial = new THREE.LineBasicMaterial({ color: 0x000000 });
+        const diameter = new THREE.Line(diameterGeometry, diameterMaterial);
+        sphere.add(diameter);
+
+        // Add Z axis
+        const zAxisGeometry = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(0, 0, -sphereRadius),
+            new THREE.Vector3(0, 0, sphereRadius)
+        ]);
+        const zAxisMaterial = new THREE.LineBasicMaterial({ color: 0x0000ff });
+        const zAxis = new THREE.Line(zAxisGeometry, zAxisMaterial);
+        sphere.add(zAxis);
+
+        // Add vertical line between N and S
+        const nsLineGeometry = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(0, sphereRadius, 0),
+            new THREE.Vector3(0, -sphereRadius, 0)
+        ]);
+        const nsLineMaterial = new THREE.LineBasicMaterial({ color: 0x000000 });
+        const nsLine = new THREE.Line(nsLineGeometry, nsLineMaterial);
+        sphere.add(nsLine);
+
+        // Add points at key positions
+        const pointsGeometry = new THREE.BufferGeometry();
+        const pointsPositions = [
+            new THREE.Vector3(0, sphereRadius, 0), // Top
+            new THREE.Vector3(0, -sphereRadius, 0), // Bottom
+            new THREE.Vector3(sphereRadius, 0, 0), // Right
+            new THREE.Vector3(-sphereRadius, 0, 0), // Left
+            new THREE.Vector3(0, 0, sphereRadius), // Front
+            new THREE.Vector3(0, 0, -sphereRadius), // Back
+        ];
+        pointsGeometry.setFromPoints(pointsPositions);
+        const pointsMaterial = new THREE.PointsMaterial({
+            color: 0x000000,
+            size: 0.1,
+            sizeAttenuation: true
+        });
+        const points = new THREE.Points(pointsGeometry, pointsMaterial);
+        sphere.add(points);
+
+        // Add point labels
+        const pointLabels = ['N', 'S', 'E', 'W', 'F', 'B'];
+        pointsPositions.forEach((position, i) => {
+            const pointLabel = document.createElement('div');
+            pointLabel.className = 'point-label';
+            pointLabel.textContent = pointLabels[i];
+            pointLabel.style.position = 'absolute';
+            pointLabel.style.color = 'black';
+            pointLabel.style.fontSize = '16px';
+            document.body.appendChild(pointLabel);
+        });
+
+        scene.add(sphere);
+
+        // Add lights
+        const light1 = new THREE.DirectionalLight(0xffffff, 1);
+        light1.position.set(1, 1, 1);
+        scene.add(light1);
+
+        const light2 = new THREE.AmbientLight(0x404040);
+        scene.add(light2);
+
+        camera.position.z = 5;
+
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetRotationX = 0;
+        let targetRotationY = 0;
+        let isMouseDown = false;
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            sphere.rotation.x += (targetRotationX - sphere.rotation.x) * 0.05;
+            sphere.rotation.y += (targetRotationY - sphere.rotation.y) * 0.05;
+
+            // Update point label positions
+            const pointLabels = document.getElementsByClassName('point-label');
+            pointsPositions.forEach((position, i) => {
+                const vector = position.clone();
+                sphere.localToWorld(vector);
+                const projected = vector.project(camera);
+                pointLabels[i].style.left = (projected.x * 0.5 + 0.5) * container.clientWidth + 'px';
+                pointLabels[i].style.top = (-projected.y * 0.5 + 0.5) * container.clientHeight + 'px';
+            });
+
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', onWindowResize, false);
+        function onWindowResize() {
+            const container = document.getElementById('sphere-container');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            
+            const minDimension = Math.min(container.clientWidth, container.clientHeight);
+            const newSphereRadius = minDimension * 0.004;
+            sphere.scale.set(newSphereRadius/sphereRadius, newSphereRadius/sphereRadius, newSphereRadius/sphereRadius);
+        }
+
+        document.addEventListener('mousedown', (event) => {
+            if (event.button === 0) {
+                isMouseDown = true;
+            }
+        });
+
+        document.addEventListener('mouseup', (event) => {
+            if (event.button === 0) {
+                isMouseDown = false;
+            }
+        });
+
+        document.addEventListener('mousemove', (event) => {
+            if (isMouseDown) {
+                mouseX = (event.clientX - container.clientWidth / 2) / (container.clientWidth / 2);
+                mouseY = (event.clientY - container.clientHeight / 2) / (container.clientHeight / 2);
+                
+                targetRotationY = mouseX * Math.PI;
+                targetRotationX = mouseY * Math.PI;
+            }
+        });
+
+        animate();
+    </script>
+    <script src="../JavaScript/holoschool.js"></script>
+</body>
+</html>
