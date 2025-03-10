@@ -1,0 +1,61 @@
+footer {
+    border-top: 1px solid #7765c7;
+    background-color: black;
+    color: white;
+    padding: 30px 10%;
+    text-align: center;
+  }
+#insta-l{
+    width: 44.125px;
+    height: 44px;
+    margin-right: 13px;
+}
+#email-l{
+    width:44.88px;
+    height: 34.88px;
+    margin-right: 15px;
+}
+footer {
+    border-top: 1px solid #7765c7;
+    background-color: black;
+    color: white;
+    padding: 30px 10%;
+    text-align: center;
+  }
+  
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  
+  /* Logo & Description */
+  .footer-logo h2 {
+    color: #9ACFFF;
+    font-size: 24px;
+  }
+  
+  .footer-logo p {
+    font-size: 14px;
+    color: #9ACFFF;
+  }
+  
+  /* Navigation Links */
+  .footer-links ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-links li {
+    display: inline-block;
+    margin: 0 20px;
+    position: relative; /* For dropdown positioning */
+  }
+  
+  .footer-links a {
+    color: #9ACFFF;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+  }
