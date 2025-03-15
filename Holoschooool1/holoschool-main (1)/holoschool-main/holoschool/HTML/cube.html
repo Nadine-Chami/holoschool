@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>3D Holographic Cube</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+        #cube-container {
+            width: 100%;
+            height: 100vh;
+        }
+        .properties{
+            display: flex;
+            flex-direction: column;
+            position:absolute;
+            border: 1px solid;
+            margin: 10px;
+            border-radius: 15px;
+        }
+        .properties > *{
+            margin: 5px;
+
+        }
+        .font{
+            font-family: "Space Grotesk";
+        }
+        .toggle{
+            border: 1px solid;
+            border-radius: 25px;
+            width:20px;
+            height:10px;
+            padding:5px;
+            cursor:pointer;
+            display:inline-block;
+        }
+        .grey{
+            background-color: grey;
+        }
+        .green{
+            background-color: green;
+        }
+        .white{
+            background-color: white;
+        }
+        .circle{
+            width:44%;
+            height:88%;
+            border:1px solid;
+            border-radius:50%;
+            box-shadow: 0px 0px 5px black;
+        }
+        .hidden{
+            position: absolute;
+            visibility: hidden;
+        }
+        .active{
+            margin-left:auto;
+        }
+        #toggle{
+            cursor: pointer;
+        }
+        #properties{
+            display: none;
+        }
+
+    </style>
+</head>
+</div>
+<body id="background">
+    <div class="properties font">
+        <h2>Properties</h2>
+        <div>
+            <label for="colorPicker">side color</label>
+            <input type="color" id="colorPicker" value="#000000" onchange="changeColorSide()">
+        </div>
+        <div>
+            <label for="edgePicker">edge color</label>
+            <input type="color" id="edgePicker" value="#000000" onchange="changeColorEdge()"/>
+        </div>
+        <div>
+            <label for="letterColor">letter color</label>
+            <input type="color" id="letterColor" value="#000000" onchange="changeColorLetter()"/>
+        </div>
+        <div> 
+            <label for="diagonalToggle">show diagonals</label>
+            <input type="checkbox" id="diagonalToggle" checked onchange="toggleDiagonals()"/>
+        </div>
+        <div>
+            <label>Dark mode: </label>
+            <input type="checkbox"  onchange="changecolor()" id="darkmode" >
+            <!-- <div class="toggle grey" onclick="active(document.getElementById('darkmode'));">
+                <div class="circle white">
+                    
+                </div>
+            </div> -->
+            
+        </div>
+        <span id="toggle" onclick="showprops()"><u>Show shape properties</u></span>
+        <div id="properties">
+            <p>A cube has:<br>-12 edges <br>-6 faces <br>-8 vertices.</p>
+            <p>The faces of a cube are:<br>-shaped as a square hence the length <br>-breadth, and height are the same.</p>
+            <p>The angles between two faces or surfaces are 90°.</p>
+            <p>The opposite planes or faces in a cube are: <br>-parallel to each other.</p>
+            <p>Each of the faces meets:<br> -the other adjacent four faces.</p>
+            <p>Each of the vertices meets: <br> -the three faces and three edges.</p>
+            <p>The edges opposite to each other are:<br>-parallel and also equal.</p>
+            <p>All the 12 diagonals on the surface area of the same measure.</p>
+            <p>All the 4 internal diagonals are equal.</p>
+            <p>The perimeter by multiplying the length of one side by 12.<br> SA = 6s^2, where SA is the surface area of the cube.</p>
+        </div>        
+    </div>
+    <div id="cube-container"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        function changeColorSide() {
+            material.color.set(colorPicker.value);
+        }
+        function changeColorEdge() {
+            lineMaterial.color.set(edgePicker.value);
+            diagonalLineMaterial.color.set(edgePicker.value);
+        }
+        function changeColorLetter(){
+            let vertexNames = document.getElementsByClassName('vertex-label');
+            for(let i=0 ;i<vertexNames.length;i++){
+                vertexNames[i].style.color=letterColor.value;
+            }
+        }
+        function toggleDiagonals() {
+            diagonalLines.visible = diagonalToggle.checked;
+        }
+        // Set up scene, camera, and renderer
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        const container = document.getElementById('cube-container');
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+
+        // Calculate cube size based on container dimensions
+        const minDimension = Math.min(container.clientWidth, container.clientHeight);
+        const cubeSize = minDimension * 0.004; // Doubled the scale factor to make cube bigger
+
+        // Create cube geometry and material
+        const geometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
+        const material = new THREE.MeshPhongMaterial({
+            color: 0x9acffff,
+            transparent: true,
+            opacity: 0.3,
+            specular: 0x555555,
+            shininess: 30,
+            side: THREE.DoubleSide
+        });
+        const cube = new THREE.Mesh(geometry, material);
+
+        // Add edges to the cube
+        const edges = new THREE.EdgesGeometry(geometry);
+        const lineMaterial = new THREE.LineBasicMaterial({ 
+            color: 0x7fceff, 
+            linewidth: 100,
+            opacity: 1
+        });
+        const wireframe = new THREE.LineSegments(edges, lineMaterial);
+        cube.add(wireframe);
+
+        // Add diagonal lines
+        const vertices = geometry.attributes.position;
+        const diagonalGeometry = new THREE.BufferGeometry();
+        const diagonalVertices = [];
+        
+        // Define all possible vertex connections
+        const diagonalConnections = [];
+        for(let i = 0; i < vertices.count; i++) {
+            for(let j = i + 1; j < vertices.count; j++) {
+                diagonalConnections.push([i, j]);
+            }
+        }
+
+        // Create diagonal lines between all vertices
+        for(let connection of diagonalConnections) {
+            const start = new THREE.Vector3().fromBufferAttribute(vertices, connection[0]);
+            const end = new THREE.Vector3().fromBufferAttribute(vertices, connection[1]);
+            diagonalVertices.push(start.x, start.y, start.z);
+            diagonalVertices.push(end.x, end.y, end.z);
+        }
+
+        diagonalGeometry.setAttribute('position', new THREE.Float32BufferAttribute(diagonalVertices, 3));
+        const diagonalLineMaterial = new THREE.LineBasicMaterial({ 
+            color: 0x7fceff,
+            linewidth: 1,
+            opacity: 1
+        });
+        const diagonalLines = new THREE.LineSegments(diagonalGeometry, diagonalLineMaterial);
+        cube.add(diagonalLines);
+
+        // Add points and labels at vertices
+        const pointsGeometry = new THREE.BufferGeometry();
+        pointsGeometry.setAttribute('position', vertices);
+        const pointsMaterial = new THREE.PointsMaterial({
+            color: 0x000000,
+            size: 0.1,
+            sizeAttenuation: true
+        });
+        const points = new THREE.Points(pointsGeometry, pointsMaterial);
+        cube.add(points);
+
+        // Add vertex labels
+        const vertexLabels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+        for(let i = 0; i < vertices.count; i++) {
+            const vertexLabel = document.createElement('div');
+            vertexLabel.className = 'vertex-label';
+            vertexLabel.textContent = vertexLabels[i];
+            vertexLabel.style.position = 'absolute';
+            vertexLabel.style.color = 'black';
+            vertexLabel.style.fontSize = '16px';
+            document.body.appendChild(vertexLabel);
+
+            // Update label positions in animation loop
+            const vector = new THREE.Vector3();
+            vector.fromBufferAttribute(vertices, i);
+            cube.localToWorld(vector);
+            const position = vector.project(camera);
+            vertexLabel.style.left = (position.x * 0.5 + 0.5) * container.clientWidth + 'px';
+            vertexLabel.style.top = (-position.y * 0.5 + 0.5) * container.clientHeight + 'px';
+        }
+
+        scene.add(cube);
+
+        // Add lights
+        const light1 = new THREE.DirectionalLight(0xffffff, 1);
+        light1.position.set(1, 1, 1);
+        scene.add(light1);
+
+        const light2 = new THREE.AmbientLight(0x404040);
+        scene.add(light2);
+
+        // Position camera
+        camera.position.z = 5;
+
+        // Track mouse position and click state
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetRotationX = 0;
+        let targetRotationY = 0;
+        let isMouseDown = false;
+
+        // Animation function
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Smoothly interpolate rotation
+            cube.rotation.x += (targetRotationX - cube.rotation.x) * 0.05;
+            cube.rotation.y += (targetRotationY - cube.rotation.y) * 0.05;
+
+            // Update vertex label positions
+            const vertexLabels = document.getElementsByClassName('vertex-label');
+            for(let i = 0; i < vertices.count; i++) {
+                const vector = new THREE.Vector3();
+                vector.fromBufferAttribute(vertices, i);
+                cube.localToWorld(vector);
+                const position = vector.project(camera);
+                vertexLabels[i].style.left = (position.x * 0.5 + 0.5) * container.clientWidth + 'px';
+                vertexLabels[i].style.top = (-position.y * 0.5 + 0.5) * container.clientHeight + 'px';
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', onWindowResize, false);
+        function onWindowResize() {
+            const container = document.getElementById('cube-container');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            
+            // Update cube size on resize
+            const minDimension = Math.min(container.clientWidth, container.clientHeight);
+            const newCubeSize = minDimension * 0.004; // Doubled the scale factor here too
+            geometry.scale(newCubeSize / cubeSize, newCubeSize / cubeSize, newCubeSize / cubeSize);
+        }
+
+        // Track mouse button state
+        document.addEventListener('mousedown', (event) => {
+            if (event.button === 0) { // Left click
+                isMouseDown = true;
+            }
+        });
+
+        document.addEventListener('mouseup', (event) => {
+            if (event.button === 0) { // Left click
+                isMouseDown = false;
+            }
+        });
+
+        // Add mouse interaction
+        document.addEventListener('mousemove', (event) => {
+            if (isMouseDown) {
+                mouseX = (event.clientX - container.clientWidth / 2) / (container.clientWidth / 2);
+                mouseY = (event.clientY - container.clientHeight / 2) / (container.clientHeight / 2);
+                
+                targetRotationY = mouseX * Math.PI;
+                targetRotationX = mouseY * Math.PI;
+            }
+        });
+
+        animate();
+    </script>
+    <script src="../JavaScript/holoschool.js"></script>
+</body>
+</html>
