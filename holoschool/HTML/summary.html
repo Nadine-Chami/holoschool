@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../CSS/nav.css" />
+    <link rel="stylesheet" href="../CSS/global.css" />
+    <link rel="stylesheet" href="../CSS/footer.css" />
+    <link rel="stylesheet" href="../CSS/holoschool.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <div> 
+            <a href="holoschoolhp.html"><img style="width: 74.8px; height:66.9px ;" src="../Pictures/holoskllllllllll.png"></a>
+        </div>
+       
+        
+            <div class="navmargin">
+                <a class="font link color nav-link lesfr " href="lesson.html">Lessons</a>
+                <a class="font link color nav-link exfr" href="lesson.html">Excercises</a>
+                <a class="font link color nav-link tufr" href="tutors.html">Tutors</a>
+                <a class="font link color nav-link contactfr" href="contactus.html">Contact Us</a>
+            </div>
+
+
+
+            <div>
+                <i id="translator" class="font link color nav-link fa-solid fa-language"></i>
+                <ul id="lang-list">
+                    <li class="color" id="en">English</li>
+                    <li class="color" id="fr">French</li>
+                </ul>
+                <a href="login.html"><i class="font link color nav-link fa-solid fa-user"></i></a>
+            </div>
+           
+
+    
+    </nav>
+    <div class="font color" style="display: inline-block; font-size: 2.5em; margin-left: 20px ;"> Orthogonality in
+        space</div>
+        <div style="margin-left: 20px; margin-top: 20px; margin-bottom: 20px;" >
+        <a class="font link color ortho-card" href="ortho.html">Shapes</a>
+    
+     <a class="font link color  ortho-cardcolor" href="summary.html" >summary</a>
+    <a class="font link color ortho-card" href="MCQ.html">MCQ</a>
+    <a class="font link color ortho-card" href="exe.html">exercises</a>
+    </div>
+    
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+    <div  class="shapes-card" onclick="togglepdf('../pdf/orthogonalityinspaceenglish.pdf')" style="margin-right: 20px;">
+        <i class="fa-solid fa-file-pdf" style="color: #9ACFFF; font-size: 50px;"></i> 
+        <p  id="togglebutton" class="color font" >orthogonality in space summary (english)</p>
+        
+    </div>
+    
+    <div class="shapes-card" onclick="togglepdf2('../pdf/orthogonalitedanslespacefr.pdf')" style="margin-left: 20px;">
+        <i class="fa-solid fa-file-pdf " style="color: #9ACFFF; font-size: 50px;"></i> 
+        <p  id="togglebutton2" class="color font">orthogonality in space summary (french)</p>
+    </div>
+</div>
+<div style="margin-bottom: 20px;">
+  <iframe id="pdfcontainer" src="../pdf/orthogonalityinspaceenglish.pdf" ></iframe>
+  <iframe id="pdfcontainer2"  src="../pdf/orthogonalitedanslespacefr.pdf" ></iframe> 
+</div>
+    <!-- <p onclick="togglepdf('../pdf/orthogonalityinspaceenglish.pdf')" id="togglebutton" class="color"><i class="fa-solid fa-file-pdf"></i> orthogonality in space summary (english)</p>
+    <iframe id="pdfcontainer" src="../pdf/orthogonalityinspaceenglish.pdf" ></iframe> 
+
+       
+
+     <p onclick="togglepdf2('../pdf/orthogonalitedanslespacefr.pdf')" id="togglebutton2" class="color"><i class="fa-solid fa-file-pdf"></i> orthogonality in space summary (french)</p>
+    <iframe id="pdfcontainer2" src="../pdf/orthogonalitedanslespacefr.pdf" ></iframe> -->
+
+    
+         <script src="https://kit.fontawesome.com/1a0a15cd29.js" crossorigin="anonymous"></script>
+         <script src="../JavaScript/holoschool.js"></script>
+         <footer>
+            <div class="footer-container font">
+                <div class="footer_left" >
+                    <div class="footer_left_1">
+                        <div class="footer_left_icon">
+                            <a href="holoschoolhp.html"><img style="width: 74.8px; height:66.9px ;" src="../Pictures/holoskllllllllll.png"></a>
+                        </div>
+                        <div class="footer_left_title">
+                            <a href="holoschoolhp.html"  class="footer_left_name"><span >HoloSchool</span></a>
+                        </div>
+                    </div>
+                    <div class="footer_left_2">
+                        <p class="footer_left_text">Imagine studying as holograms swirl around you, bringing lessons to life!</p>
+                    </div>
+                    <div class="footer_left_3">
+                        <div class="contact_container">
+                            <span class="contact">Contact Us</span>
+                        </div>
+                        <div class="icons_container">
+                         <div class="insta-icon"> <a href="https://www.instagram.com/holoschool_?igsh=MWlwMHgyMmMxaDBkcA==" style="text-decoration: none;" ><i class="fa-brands fa-instagram icon "></i></a>
+                         </div>
+                           <div a href="mailto:holoschool.lessons@gmail.com" class="em-icon"><i class="fa-regular fa-envelope icon"></i></a>
+                           </div> 
+                        </div>
+    
+                    </div>
+                </div>
+                <div class="footer_middle" >
+                    <div style="margin-bottom: 40px;">
+                        <a href="lesson.html" class="icon2">Lessons</a>
+                    </div>
+                    <div style="margin-bottom: 40px;">
+                        <a href="exercise.html" class="iconn" >Exercises</a>
+                    </div>
+                    <div style="margin-bottom: 40px;">
+                        <a href="tutors.html" class="icon2">Tutors</a>
+                    </div>
+                </div>
+                <div class="footer_right" >
+                    <div class="feedback_container">
+                        <a href="contactus.html" class="icon2">Feedback</a>
+                    </div>
+                    <div class="input_container">
+                        <input style="background-color: black; color: #9ACFFF;" type="text" id="question"
+                                question="question" placeholder="how can we help you?">
+                    </div>
+                    <div class="translate_container">
+                        <i id="translator" class="font link color nav-link fa-solid fa-language"></i>
+                  
+                        <a href="login.html"><i class="font link color nav-link fa-solid fa-user"></i></a>
+                    </div>
+    
+                </div>
+            </div>
+        </footer>
+        </body>
+</html>
