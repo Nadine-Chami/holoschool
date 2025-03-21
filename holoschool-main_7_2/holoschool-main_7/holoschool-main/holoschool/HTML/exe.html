@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../CSS/nav.css" />
+    <link rel="stylesheet" href="../CSS/global.css" />
+    <link rel="stylesheet" href="../CSS/footer.css" />
+    <link rel="stylesheet" href="../CSS/holoschool.css" />
+    <link rel="stylesheet" href="../CSS/contactus.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <style>
+        .solbutton {
+            background-color: black;
+            color: #fff;
+            cursor: pointer;
+            display: none;
+            /* Initially hidden */
+        }
+
+        .exe {
+            width: 500px;
+            height: 550px;
+        }
+    </style>
+</head>
+<nav>
+    <div>
+        <a href="holoschoolhp.html"><img style="width: 74.8px; height:66.9px ;"
+                src="../Pictures/holoskllllllllll.png"></a>
+    </div>
+
+    <div class="navmargin">
+        <a class="font link color nav-link lesfr" href="lesson.html">Lessons</a>
+        <a class="font link color nav-link exfr" href="lesson.html">Excercises</a>
+        <a class="font link color nav-link tufr" href="tutors.html">Tutors</a>
+        <a class="font link color nav-link contactfr" href="contactus.html">Contact Us</a>
+    </div>
+
+    <div>
+        <i id="translator" class="font link color nav-link fa-solid fa-language"></i>
+        <ul id="lang-list">
+            <li class="color" id="en">English</li>
+            <li class="color" id="fr">French</li>
+        </ul>
+        <a href="login.html"><i class="font link color nav-link fa-solid fa-user"></i></a>
+    </div>
+
+</nav>
+<div >
+<body>
+    <div class="font color" style="display: inline-block; font-size: 2.5em; margin-left: 20px;">Orthogonality in space
+    </div>
+    <div style="margin-left: 20px; margin-top: 20px; margin-bottom: 20px;">
+        <a class="font link color ortho-card" href="ortho.html">Shapes</a>
+        <a class="font link color ortho-card" href="summary.html">Summary</a>
+        <a class="font link color ortho-card" href="MCQ.html">MCQ</a>
+        <a class="font link color ortho-cardcolor" href="exe.html">Exercises</a>
+    </div>
+
+    <!-- Exercice 1 Section -->
+    <div style="display: flex; justify-content: space-evenly; margin-top: 20px;">
+        <div>
+            <div class="color font exercices-card" onclick="toggleLanguageOptions('ex1')">
+                Exercice 1
+                <i class="fa-solid fa-sort-down" style="margin: 5px;"></i>
+            </div>
+
+            <!-- Language Options (Initially Hidden) -->
+            <div id="language-options-ex1" style="display:none;">
+                <div class="color exercices-card2 font" onclick="showExercise('ex1', 'english')">English</div>
+                <div class="color exercices-card2 font" onclick="showExercise('ex1', 'french')">French</div>
+            </div>
+
+            <!-- English Exercise Image (Initially Hidden) -->
+            <div id="english-ex1" style="display:none;">
+                <img src="../Pictures/ex1eng.jpg" alt="English Exercise 1">
+            </div>
+
+            <!-- French Exercise Image (Initially Hidden) -->
+            <div id="french-ex1" style="display:none;">
+                <img src="../Pictures/ex1fr.jpg" alt="French Exercise 1">
+            </div>
+
+            <!-- Solution Button -->
+            <button class="solbutton" id="solbutton-ex1" onclick="toggleSolution('ex1')">Solution</button>
+            <div id="solution-ex1" style="display:none;">
+                <img class="exe" id="solution-img-ex1" src="../Pictures/ex1engsol.jpg" alt="Solution">
+            </div>
+        </div>
+
+        <!-- Exercice 2 Section -->
+        <div>
+            <div class="color font exercices-card" onclick="toggleLanguageOptions('ex2')">Exercice 2 <i
+                    class="fa-solid fa-sort-down arrow" id="arrow" style="margin-left: 5px;"></i>
+            </div>
+
+            <!-- Language Options (Initially Hidden) -->
+            <div id="language-options-ex2" style="display:none;">
+                <div class="color exercices-card2 font" onclick="showExercise('ex2', 'english')">English</div>
+                <div class="color exercices-card2 font" onclick="showExercise('ex2', 'french')">French</div>
+            </div>
+
+            <!-- English Exercise 2 Image (Initially Hidden) -->
+            <div id="english-ex2" style="display:none;">
+                <img src="../Pictures/ex2eng.jpg" alt="English Exercise 2">
+            </div>
+
+            <!-- French Exercise 2 Image (Initially Hidden) -->
+            <div id="french-ex2" style="display:none;">
+                <img src="../Pictures/ex3fr.jpg" alt="French Exercise 2">
+            </div>
+
+            <!-- Solution Button for Ex2 -->
+            <button class="solbutton" id="solbutton-ex2" onclick="toggleSolution('ex2')">Solution</button>
+
+            <!-- Solution Image for Ex2 (Initially Hidden) -->
+            <div id="solution-ex2" style="display:none;">
+                <img class="exe" id="solution-img-ex2" src="solex2.jpg" alt="Solution for Ex2">
+            </div>
+        </div>
+
+        <!-- Exercice 3 Section -->
+        <div>
+            <div class="color font exercices-card" onclick="toggleLanguageOptions('ex3')">Exercice 3 <i
+                    class="fa-solid fa-sort-down" style="margin-left: 5px;"></i></div>
+            <div id="language-options-ex3" style="display:none;">
+                <div class="color exercices-card2 font" onclick="showExercise('ex3', 'english')">English</div>
+                <div class="color exercices-card2 font" onclick="showExercise('ex3', 'french')">French</div>
+            </div>
+
+            <!-- English Exercise 3 Image (Initially Hidden) -->
+            <div id="english-ex3" style="display:none;">
+                <img src="ex3eng.jpg" alt="English Exercise 3">
+            </div>
+
+            <!-- French Exercise 3 Image (Initially Hidden) -->
+            <div id="french-ex3" style="display:none;">
+                <img src="ex3fr.jpg" alt="French Exercise 3">
+            </div>
+
+            <!-- Solution Button for Ex3 -->
+            <button class="solbutton" id="solbutton-ex3" onclick="toggleSolution('ex3')">Solution</button>
+
+            <!-- Solution Image for Ex3 (Initially Hidden) -->
+            <div id="solution-ex3" style="display:none;">
+                <img class="exe" id="solution-img-ex3" src="solex3.jpg" alt="Solution for Ex3">
+                <img class="exe" id="solution-img-ex3" src="sol2ex3.jpg" alt="Solution2for Ex3">
+            </div>
+        </div>
+    </div>
+
+    <script src="../JavaScript/holoschool.js"></script>
+    <script src="https://kit.fontawesome.com/1a0a15cd29.js" crossorigin="anonymous"></script>
+
+    <script>
+        // Toggle visibility for language options (English/French) for a specific exercise
+        function toggleLanguageOptions(exerciseId) {
+            const languageOptions = document.getElementById(`language-options-${exerciseId}`);
+            languageOptions.style.display = (languageOptions.style.display === "none" || languageOptions.style.display === "") ? "block" : "none";
+        }
+
+        // Show or hide the selected exercise and its solution
+        function showExercise(exerciseId, language) {
+            // Get references to elements
+            const englishExercise = document.getElementById(`english-${exerciseId}`);
+            const frenchExercise = document.getElementById(`french-${exerciseId}`);
+            const solutionButton = document.getElementById(`solbutton-${exerciseId}`);
+            const solution = document.getElementById(`solution-${exerciseId}`);
+
+            // Hide all exercise images and solutions if the clicked language is already open
+            if ((language === 'english' && englishExercise.style.display === "block") ||
+                (language === 'french' && frenchExercise.style.display === "block")) {
+                englishExercise.style.display = "none";
+                frenchExercise.style.display = "none";
+                solutionButton.style.display = "none";
+                solution.style.display = "none";
+                return;
+            }
+
+            // Hide all exercise images and solutions
+            englishExercise.style.display = "none";
+            frenchExercise.style.display = "none";
+            solution.style.display = "none";
+            solutionButton.style.display = "none";
+
+            // Show the selected exercise image and the solution button
+            if (language === 'english') {
+                englishExercise.style.display = "block";
+            } else if (language === 'french') {
+                frenchExercise.style.display = "block";
+            }
+
+            // Show the solution button
+            solutionButton.style.display = "block";
+        }
+
+        // Toggle visibility for the solution image for a specific exercise
+        function toggleSolution(exerciseId) {
+            const solution = document.getElementById(`solution-${exerciseId}`);
+            solution.style.display = (solution.style.display === "none" || solution.style.display === "") ? "block" : "none";
+        }
+    </script>
+</div>
+<footer style="margin-top: 500px;">
+    <div class="footer-container font">
+        <div class="footer_left">
+            <div class="footer_left_1">
+                <div class="footer_left_icon">
+                    <a href="holoschoolhp.html"><img style="width: 74.8px; height:66.9px ;"
+                            src="../Pictures/holoskllllllllll.png"></a>
+                </div>
+                <div class="footer_left_title">
+                    <a href="holoschoolhp.html" class="footer_left_name"><span>HoloSchool</span></a>
+                </div>
+            </div>
+            <div class="footer_left_2">
+                <p class="footer_left_text">Imagine studying as holograms swirl around you, bringing lessons
+                    to life!</p>
+            </div>
+            <div class="footer_left_3">
+                <div class="contact_container">
+                    <span class="contact">Contact Us</span>
+                </div>
+                <div class="icons_container">
+                    <div class="insta-icon"> <a
+                            href="https://www.instagram.com/holoschool_?igsh=MWlwMHgyMmMxaDBkcA=="
+                            style="text-decoration: none;"><i class="fa-brands fa-instagram icon " style="color: #9ACFFF;"></i></a>
+                    </div>
+                    <div  class="em-icon"><a href="mailto:example@example.com">
+                        <i
+                            class="fa-regular fa-envelope icon" style="color: #9ACFFF;"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="footer_middle">
+            <div style="margin-bottom: 40px;">
+                <a href="lesson.html" class="icon2">Lessons</a>
+            </div>
+            <div style="margin-bottom: 40px;">
+                <a href="exercise.html" class="iconn">Exercises</a>
+            </div>
+            <div style="margin-bottom: 40px;">
+                <a href="tutors.html" class="icon2">Tutors</a>
+            </div>
+        </div>
+        <div class="footer_right">
+            <div
+                style="border: 1px solid #7765c7; border-radius: 10px; padding-bottom: 20px; padding-left: 10px;padding-right: 10px;">
+                <div class="feedback_container">
+                    <a href="contactus.html" class="icon2">Feedback</a>
+                </div>
+                <div class="input_container">
+                    <input style="background-color: black; color: #9ACFFF;" type="text" id="question"
+                        question="question" style="width:30px" placeholder="how can we help you?">
+
+
+                </div>
+            </div>
+            <div style="margin-top: 20px" class="translate_container">
+                <i id="translator" class="font link color nav-link fa-solid fa-language"></i>
+
+                <a href="login.html"><i class="font link color nav-link fa-solid fa-user"></i></a>
+            </div>
+
+
+        </div>
+    </div>
+    <hr>
+    <p class="footer-copy font">© 2025 HoloSchool. All Rights Reserved.</p>
+</footer>
+</body>
+
+</html>
