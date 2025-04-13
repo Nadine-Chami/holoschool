@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand Interaction with Cube</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+        }
+        #webcam {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        canvas {
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <video id="webcam" width="640" height="480" autoplay></video>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handtrackjs"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        const videoElement = document.getElementById("webcam");
+        const canvas = document.createElement("canvas");
+        document.body.appendChild(canvas);
+        const context = canvas.getContext("2d");
+
+        // Setup Three.js scene
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Create a cube
+        const geometry = new THREE.BoxGeometry();
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+        camera.position.z = 5;
+
+        // Setup handtrack.js model
+        let model;
+        handTrack.load().then((loadedModel) => {
+            model = loadedModel;
+            startHandTracking();
+        });
+
+        // Function to start hand tracking
+        function startHandTracking() {
+            handTrack.startVideo(videoElement).then(() => {
+                detectHands();
+            });
+        }
+
+        // Function to request camera access
+        function requestCameraAccess() {
+            // Use getUserMedia API to access webcam
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then((stream) => {
+                    videoElement.srcObject = stream;
+                    videoElement.play();
+                    startHandTracking(); // Start hand tracking once the video is available
+                })
+                .catch((error) => {
+                    console.error('Error accessing the camera: ', error);
+                    alert('Camera access is required to use this feature.');
+                });
+        }
+
+        // Detect hands and update the cube position
+        function detectHands() {
+            model.detect(videoElement).then((predictions) => {
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                if (predictions.length > 0) {
+                    const hand = predictions[0]; // Take the first hand
+                    const [x, y] = hand.bbox.slice(0, 2); // Get the bounding box position
+
+                    // Map hand position to cube position
+                    const normalizedX = (x + hand.bbox[2] / 2) / window.innerWidth * 2 - 1;
+                    const normalizedY = -(y + hand.bbox[3] / 2) / window.innerHeight * 2 + 1;
+
+                    cube.position.x = normalizedX * 5; // Scale cube movement
+                    cube.position.y = normalizedY * 5; // Scale cube movement
+                }
+
+                // Continue detecting hands
+                requestAnimationFrame(detectHands);
+            });
+        }
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Request camera access when the page loads
+        requestCameraAccess();
+    </script>
+</body>
+</html>

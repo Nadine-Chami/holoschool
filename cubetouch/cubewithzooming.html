@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Cube with Hand Tracking with zoom</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+        }
+        #webcam {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        #handCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <video id="webcam" width="1280" height="720" autoplay></video>
+    <canvas id="handCanvas" width="1280" height="720"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handtrackjs"></script>
+    <script>
+        const videoElement = document.getElementById("webcam");
+        const handCanvas = document.getElementById("handCanvas");
+        const ctx = handCanvas.getContext("2d");
+        
+        // Setup scene, camera and renderer
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Create cube with different colored faces
+        const geometry = new THREE.BoxGeometry(2, 2, 2);
+        const materials = [
+            new THREE.MeshBasicMaterial({ color: 0xff0000 }), // red
+            new THREE.MeshBasicMaterial({ color: 0x00ff00 }), // green
+            new THREE.MeshBasicMaterial({ color: 0x0000ff }), // blue
+            new THREE.MeshBasicMaterial({ color: 0xffff00 }), // yellow
+            new THREE.MeshBasicMaterial({ color: 0xff00ff }), // magenta
+            new THREE.MeshBasicMaterial({ color: 0x00ffff })  // cyan
+        ];
+        const cube = new THREE.Mesh(geometry, materials);
+        scene.add(cube);
+
+        camera.position.z = 5;
+
+        // Hand tracking setup with single object detection
+        const modelParams = {
+            flipHorizontal: true,
+            maxNumBoxes: 1, // Ensure only one object is detected
+            iouThreshold: 0.8, // Increased to be more selective
+            scoreThreshold: 0.8 // Increased confidence threshold
+        };
+
+        let model = null;
+        let lastX = 0;
+        let lastY = 0;
+        let targetRotationX = 0;
+        let targetRotationY = 0;
+        let targetScale = 1;
+        const smoothingFactor = 0.05;
+        const MIN_SCALE = 0.5;
+        const MAX_SCALE = 2.5;
+        
+        handTrack.load(modelParams).then(lmodel => {
+            model = lmodel;
+            startVideo();
+        });
+
+        function startVideo() {
+            handTrack.startVideo(videoElement).then(status => {
+                if (status) {
+                    runDetection();
+                }
+            });
+        }
+
+        function drawCircle(x, y) {
+            ctx.beginPath();
+            ctx.arc(x, y, 20, 0, 2 * Math.PI);
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+        }
+
+        function updateScale(hand) {
+            // Calculate bounding box area as measure of hand closure
+            const area = hand.bbox[2] * hand.bbox[3];
+            
+            // Normalize area to reasonable scale values
+            const normalizedArea = area / (videoElement.width * videoElement.height);
+            targetScale = MIN_SCALE + normalizedArea * (MAX_SCALE - MIN_SCALE) * 10;
+            
+            // Clamp scale between min and max values
+            targetScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, targetScale));
+        }
+
+        function runDetection() {
+            model.detect(videoElement).then(predictions => {
+                ctx.clearRect(0, 0, handCanvas.width, handCanvas.height);
+                
+                // Only process the first detected object
+                if (predictions.length > 0) {
+                    const hand = predictions[0]; // Take only the first detection
+                    const x = hand.bbox[0];
+                    const y = hand.bbox[1];
+                    
+                    drawCircle(x, y);
+                    updateScale(hand);
+                    
+                    const normalizedX = x / videoElement.width;
+                    const normalizedY = y / videoElement.height;
+                    
+                    const deltaX = normalizedX - lastX;
+                    const deltaY = normalizedY - lastY;
+                    
+                    targetRotationY += deltaX * 5;
+                    targetRotationX += deltaY * 5;
+                    
+                    lastX = normalizedX;
+                    lastY = normalizedY;
+                }
+                requestAnimationFrame(runDetection);
+            });
+        }
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            if (!model) {
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
+            } else {
+                cube.rotation.x += (targetRotationX - cube.rotation.x) * smoothingFactor;
+                cube.rotation.y += (targetRotationY - cube.rotation.y) * smoothingFactor;
+                
+                // Smooth scale animation
+                cube.scale.x += (targetScale - cube.scale.x) * smoothingFactor;
+                cube.scale.y += (targetScale - cube.scale.y) * smoothingFactor;
+                cube.scale.z += (targetScale - cube.scale.z) * smoothingFactor;
+            }
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>
